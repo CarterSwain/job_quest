@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from database import save_job, get_saved_jobs, register_user, get_user_by_username
 from flask_bcrypt import Bcrypt
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY  # Load secret key from .env
@@ -65,7 +66,12 @@ def fetch_jobs(job_title, location, job_type, page=1):
         return job_list
     else:
         print(f"API Error: {response.text}")
-        return None
+        return None 
+    
+# Base.html Footer Year
+@app.context_processor
+def inject_year():
+    return {"current_year": datetime.now().year}    
 
 # Homepage (Search Form)
 @app.route("/")
