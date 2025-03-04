@@ -73,17 +73,27 @@ def index():
     return render_template("index.html")
 
 # Search Results Page
-@app.route("/search", methods=["POST"])
+@app.route("/search", methods=["GET", "POST"])
 def search():
-    job_title = request.form["job_title"].strip()
-    location = request.form["location"].strip()
-    job_type = request.form["job_type"]
-    page = request.args.get("page", 1, type=int)
+    if request.method == "POST":
+        # Handling the search form submission
+        job_title = request.form["job_title"].strip()
+        location = request.form["location"].strip()
+        job_type = request.form["job_type"]
+        page = 1  # Reset to first page on a new search
 
-    if not job_title:
-        flash("Please enter a job title.", "error")
-        return redirect(url_for("index"))
+        # Validate input
+        if not job_title:
+            flash("Please enter a job title.", "error")
+            return redirect(url_for("index"))
+    
+    else:  # GET request for pagination
+        job_title = request.args.get("job_title", "").strip()
+        location = request.args.get("location", "").strip()
+        job_type = request.args.get("job_type", "")
+        page = request.args.get("page", 1, type=int)  # Use current page from query string
 
+    # Fetch job results
     jobs = fetch_jobs(job_title, location, job_type, page)
 
     if jobs is None:
@@ -91,6 +101,7 @@ def search():
         return redirect(url_for("index"))
 
     return render_template("results.html", jobs=jobs, job_title=job_title, location=location, job_type=job_type, page=page)
+
 
 # Register User
 @app.route("/register", methods=["GET", "POST"])
@@ -138,6 +149,11 @@ def logout():
 @app.route("/search_page")
 def search_page():
     return render_template("search.html")
+
+# Forgout Password
+@app.route("/forgot_password")
+def forgot_password():
+    return render_template("forgot_password.html")
 
 
 # Save a job to SQLite (Only for logged-in users)

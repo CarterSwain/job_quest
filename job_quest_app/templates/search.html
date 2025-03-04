@@ -3,16 +3,30 @@
 {% block title %}Search Jobs - JobQuest{% endblock %}
 
 {% block content %}
-    <h1>Search for Jobs</h1>
+<div class="container">
+    <h1 class="text-center my-4">Search for Jobs</h1>
 
-    <form action="{{ url_for('search') }}" method="post">
-        <input type="text" name="job_title" placeholder="Enter job title" required>
-        <input type="text" name="location" placeholder="Enter location (or Remote)">
-        <select name="job_type">
-            <option value="remote">Remote</option>
-            <option value="in-office">In-Office</option>
-            <option value="hybrid">Hybrid</option>
-        </select>
-        <button type="submit">Search Jobs</button>
+    <form action="{{ url_for('search') }}" method="post" class="card p-4 shadow-sm">
+        <div class="mb-3">
+            <label class="form-label">Job Title</label>
+            <input type="text" name="job_title" class="form-control" placeholder="Enter job title" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Location</label>
+            <input type="text" name="location" class="form-control" placeholder="Enter location (or Remote)">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Job Type</label>
+            <select name="job_type" class="form-select">
+                <option value="remote">Remote</option>
+                <option value="in-office">In-Office</option>
+                <option value="hybrid">Hybrid</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Search Jobs</button>
     </form>
+</div>
 {% endblock %}

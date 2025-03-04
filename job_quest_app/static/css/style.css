@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Doodle+Shadow&display=swap');
+
+/* Set Roboto as the default font for the body */
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Apply Rubik Doodle Shadow to all heading elements */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rubik Doodle Shadow', cursive;
+}
+
+.card-title {
+    font-size: 1.5rem; /* Adjust size as needed */
+    font-weight: 700; /* Make it bolder */
+}

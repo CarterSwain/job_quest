@@ -3,15 +3,17 @@
 {% block title %}Home - JobQuest{% endblock %}
 
 {% block content %}
-    <section class="hero">
-        <h1>Find Your Dream Job with JobQuest</h1>
-        <p>Search thousands of job listings and save your favorites.</p>
-        
+<div class="container text-center mt-5">
+    <div class="p-5 mb-4 bg-primary text-white rounded">
+        <h1 class="display-4 mb-3">Find Your Dream Job with JobQuest</h1>
+        <p class="lead mb-4">Search thousands of job listings and save your favorites.</p>
+
         {% if current_user.is_authenticated %}
-            <a href="{{ url_for('search_page') }}" class="hero-btn">Start Searching</a>
+            <a href="{{ url_for('search_page') }}" class="btn btn-light btn-lg">Start Searching</a>
         {% else %}
-            <a href="{{ url_for('login') }}" class="hero-btn">Login</a>
-            <a href="{{ url_for('register') }}" class="hero-btn">Register</a>
+            <a href="{{ url_for('login') }}" class="btn btn-success btn-lg">Login</a>
+            <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg">Register</a>
         {% endif %}
-    </section>
+    </div>
+</div>
 {% endblock %}

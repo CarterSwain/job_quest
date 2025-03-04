@@ -3,26 +3,32 @@
 {% block title %}Saved Jobs - JobQuest{% endblock %}
 
 {% block content %}
-    <h1>Saved Jobs</h1>
+<div class="container">
+    <h1 class="text-center my-4">Saved Jobs</h1>
 
     {% if jobs %}
-        <ul class="job-list">
+        <div class="row">
             {% for job in jobs %}
-                <li class="job-card">
-                    <h2><a href="{{ job[6] }}" target="_blank">{{ job[1] }}</a></h2>
-                    <p><strong>Company:</strong> {{ job[2] }}</p>
-                    <p><strong>Location:</strong> {{ job[3] }}</p>
-                    <p><strong>Salary:</strong> {{ job[4] }}</p>
-                    <p><strong>Type:</strong> {{ job[5] }}</p>
+                <div class="col-md-6">
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{{ job[6] }}" target="_blank">{{ job[1] }}</a></h5>
+                            <p class="card-text"><strong>Company:</strong> {{ job[2] }}</p>
+                            <p class="card-text"><strong>Location:</strong> {{ job[3] }}</p>
+                            <p class="card-text"><strong>Salary:</strong> {{ job[4] }}</p>
+                            <p class="card-text"><strong>Type:</strong> {{ job[5] }}</p>
 
-                    <!-- Delete Job Button -->
-                    <form action="{{ url_for('delete_job', job_id=job[0]) }}" method="post">
-                        <button type="submit" class="delete-btn">Remove</button>
-                    </form>
-                </li>
+                            <!-- Delete Job Button -->
+                            <form action="{{ url_for('delete_job', job_id=job[0]) }}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
-        <p>You haven't saved any jobs yet.</p>
+        <p class="text-center">You haven't saved any jobs yet.</p>
     {% endif %}
+</div>
 {% endblock %}
