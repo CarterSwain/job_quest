@@ -1,5 +1,4 @@
 # Ignore config and environment files
-config.py
 .env
 
 # Ignore virtual environment folder
