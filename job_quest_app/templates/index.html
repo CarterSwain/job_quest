@@ -3,15 +3,15 @@
 {% block title %}Home - JobQuest{% endblock %}
 
 {% block content %}
-    <h1>Welcome to JobQuest</h1>
-    <form action="{{ url_for('search') }}" method="post">
-        <input type="text" name="job_title" placeholder="Enter job title" required>
-        <input type="text" name="location" placeholder="Enter location (or Remote)">
-        <select name="job_type">
-            <option value="remote">Remote</option>
-            <option value="in-office">In-Office</option>
-            <option value="hybrid">Hybrid</option>
-        </select>
-        <button type="submit">Search Jobs</button>
-    </form>
+    <section class="hero">
+        <h1>Find Your Dream Job with JobQuest</h1>
+        <p>Search thousands of job listings and save your favorites.</p>
+        
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('search_page') }}" class="hero-btn">Start Searching</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="hero-btn">Login</a>
+            <a href="{{ url_for('register') }}" class="hero-btn">Register</a>
+        {% endif %}
+    </section>
 {% endblock %}

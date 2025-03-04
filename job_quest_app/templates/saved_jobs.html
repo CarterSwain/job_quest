@@ -9,10 +9,11 @@
         <ul class="job-list">
             {% for job in jobs %}
                 <li class="job-card">
-                    <h2><a href="{{ job[5] }}" target="_blank">{{ job[1] }}</a></h2>
+                    <h2><a href="{{ job[6] }}" target="_blank">{{ job[1] }}</a></h2>
                     <p><strong>Company:</strong> {{ job[2] }}</p>
                     <p><strong>Location:</strong> {{ job[3] }}</p>
                     <p><strong>Salary:</strong> {{ job[4] }}</p>
+                    <p><strong>Type:</strong> {{ job[5] }}</p>
 
                     <!-- Delete Job Button -->
                     <form action="{{ url_for('delete_job', job_id=job[0]) }}" method="post">

@@ -13,7 +13,17 @@
             <a href="{{ url_for('index') }}" class="logo">JobQuest</a>
             <ul class="nav-links">
                 <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('search_page') }}">Search Jobs</a></li>
                 <li><a href="{{ url_for('saved_jobs') }}">Saved Jobs</a></li>
+
+                <!-- Display user greeting if logged in -->
+                {% if current_user.is_authenticated %}
+                    <li class="nav-user">Hello, {{ current_user.username }}!</li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
