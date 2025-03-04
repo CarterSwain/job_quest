@@ -1,21 +1,57 @@
-<h2>Results for "{{ job_title }}" in "{{ location }}"</h2>
+{% extends "base.html" %}
 
-{% for job in jobs %}
-    <h3><a href="{{ job.URL }}" target="_blank">{{ job.Title }}</a></h3>
-    <p>Company: {{ job.Company }}</p>
-    <p>Location: {{ job.Location }}</p>
-    <p>Salary: {{ job.Salary }}</p>
-    <p>Type: {{ job.Type }}</p>
+{% block title %}Search Results - JobQuest{% endblock %}
 
-    <form action="/save_job" method="post">
-        <input type="hidden" name="title" value="{{ job.Title }}">
-        <input type="hidden" name="company" value="{{ job.Company }}">
-        <input type="hidden" name="location" value="{{ job.Location }}">
-        <input type="hidden" name="salary" value="{{ job.Salary }}">
-        <input type="hidden" name="job_type" value="{{ job.Type }}">
-        <input type="hidden" name="url" value="{{ job.URL }}">
-        <button type="submit">Save Job</button>
+{% block content %}
+    <h1>Job Search Results</h1>
+    
+    <!-- Search Form (Allows users to refine search) -->
+    <form action="{{ url_for('search') }}" method="post" class="search-form">
+        <input type="text" name="job_title" placeholder="Enter job title" value="{{ job_title }}" required>
+        <input type="text" name="location" placeholder="Enter location (or Remote)" value="{{ location }}">
+        <select name="job_type">
+            <option value="remote" {% if job_type == "remote" %}selected{% endif %}>Remote</option>
+            <option value="in-office" {% if job_type == "in-office" %}selected{% endif %}>In-Office</option>
+            <option value="hybrid" {% if job_type == "hybrid" %}selected{% endif %}>Hybrid</option>
+        </select>
+        <button type="submit">Search Again</button>
     </form>
-{% endfor %}
 
-<a href="/search?page={{ page + 1 }}">Next Page</a>
+    <!-- Job Listings -->
+    {% if jobs %}
+        <ul class="job-list">
+            {% for job in jobs %}
+                <li class="job-card">
+                    <h2><a href="{{ job.URL }}" target="_blank">{{ job.Title }}</a></h2>
+                    <p><strong>Company:</strong> {{ job.Company }}</p>
+                    <p><strong>Location:</strong> {{ job.Location }}</p>
+                    <p><strong>Salary:</strong> {{ job.Salary }}</p>
+                    <p><strong>Type:</strong> {{ job.Type }}</p>
+                    
+                    <!-- Save Job Button -->
+                    <form action="{{ url_for('save') }}" method="post">
+                        <input type="hidden" name="title" value="{{ job.Title }}">
+                        <input type="hidden" name="company" value="{{ job.Company }}">
+                        <input type="hidden" name="location" value="{{ job.Location }}">
+                        <input type="hidden" name="salary" value="{{ job.Salary }}">
+                        <input type="hidden" name="job_type" value="{{ job.Type }}">
+                        <input type="hidden" name="url" value="{{ job.URL }}">
+                        <button type="submit" class="save-btn">Save Job</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="{{ url_for('search', job_title=job_title, location=location, job_type=job_type, page=page-1) }}" class="prev">Previous</a>
+            {% endif %}
+            <span>Page {{ page }}</span>
+            <a href="{{ url_for('search', job_title=job_title, location=location, job_type=job_type, page=page+1) }}" class="next">Next</a>
+        </div>
+
+    {% else %}
+        <p>No jobs found. Try adjusting your search criteria.</p>
+    {% endif %}
+{% endblock %}

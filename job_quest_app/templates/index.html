@@ -1,10 +1,17 @@
-<form action="/search" method="post">
-    <input type="text" name="job_title" placeholder="Enter job title" required>
-    <input type="text" name="location" placeholder="Enter location (or Remote)">
-    <select name="job_type">
-        <option value="remote">Remote</option>
-        <option value="in-office">In-Office</option>
-        <option value="hybrid">Hybrid</option>
-    </select>
-    <button type="submit">Search Jobs</button>
-</form>
+{% extends "base.html" %}
+
+{% block title %}Home - JobQuest{% endblock %}
+
+{% block content %}
+    <h1>Welcome to JobQuest</h1>
+    <form action="{{ url_for('search') }}" method="post">
+        <input type="text" name="job_title" placeholder="Enter job title" required>
+        <input type="text" name="location" placeholder="Enter location (or Remote)">
+        <select name="job_type">
+            <option value="remote">Remote</option>
+            <option value="in-office">In-Office</option>
+            <option value="hybrid">Hybrid</option>
+        </select>
+        <button type="submit">Search Jobs</button>
+    </form>
+{% endblock %}

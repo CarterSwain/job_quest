@@ -1,8 +1,27 @@
-<h2>Saved Jobs</h2>
+{% extends "base.html" %}
 
-{% for job in jobs %}
-    <h3><a href="{{ job[5] }}" target="_blank">{{ job[1] }}</a></h3>
-    <p>Company: {{ job[2] }}</p>
-    <p>Location: {{ job[3] }}</p>
-    <p>Salary: {{ job[4] }}</p>
-{% endfor %}
+{% block title %}Saved Jobs - JobQuest{% endblock %}
+
+{% block content %}
+    <h1>Saved Jobs</h1>
+
+    {% if jobs %}
+        <ul class="job-list">
+            {% for job in jobs %}
+                <li class="job-card">
+                    <h2><a href="{{ job[5] }}" target="_blank">{{ job[1] }}</a></h2>
+                    <p><strong>Company:</strong> {{ job[2] }}</p>
+                    <p><strong>Location:</strong> {{ job[3] }}</p>
+                    <p><strong>Salary:</strong> {{ job[4] }}</p>
+
+                    <!-- Delete Job Button -->
+                    <form action="{{ url_for('delete_job', job_id=job[0]) }}" method="post">
+                        <button type="submit" class="delete-btn">Remove</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't saved any jobs yet.</p>
+    {% endif %}
+{% endblock %}

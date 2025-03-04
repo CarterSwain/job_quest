@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import requests
 from database import save_job, get_saved_jobs
 import config
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY  # Load secret key from .env
@@ -81,6 +82,18 @@ def save():
     save_job(title, company, location, salary, job_type, url)
     flash("Job saved successfully!", "success")
     return redirect(url_for("saved_jobs"))
+
+# Delete a saved job.
+@app.route("/delete_job/<int:job_id>", methods=["POST"])
+def delete_job(job_id):
+    conn = sqlite3.connect(config.DATABASE_NAME)
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM saved_jobs WHERE id = ?", (job_id,))
+    conn.commit()
+    conn.close()
+    flash("Job removed successfully!", "success")
+    return redirect(url_for("saved_jobs"))
+
 
 # Display saved jobs
 @app.route("/saved_jobs")
