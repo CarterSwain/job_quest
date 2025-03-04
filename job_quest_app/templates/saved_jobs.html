@@ -1,0 +1,8 @@
+<h2>Saved Jobs</h2>
+
+{% for job in jobs %}
+    <h3><a href="{{ job[5] }}" target="_blank">{{ job[1] }}</a></h3>
+    <p>Company: {{ job[2] }}</p>
+    <p>Location: {{ job[3] }}</p>
+    <p>Salary: {{ job[4] }}</p>
+{% endfor %}

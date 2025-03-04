@@ -1,0 +1,21 @@
+<h2>Results for "{{ job_title }}" in "{{ location }}"</h2>
+
+{% for job in jobs %}
+    <h3><a href="{{ job.URL }}" target="_blank">{{ job.Title }}</a></h3>
+    <p>Company: {{ job.Company }}</p>
+    <p>Location: {{ job.Location }}</p>
+    <p>Salary: {{ job.Salary }}</p>
+    <p>Type: {{ job.Type }}</p>
+
+    <form action="/save_job" method="post">
+        <input type="hidden" name="title" value="{{ job.Title }}">
+        <input type="hidden" name="company" value="{{ job.Company }}">
+        <input type="hidden" name="location" value="{{ job.Location }}">
+        <input type="hidden" name="salary" value="{{ job.Salary }}">
+        <input type="hidden" name="job_type" value="{{ job.Type }}">
+        <input type="hidden" name="url" value="{{ job.URL }}">
+        <button type="submit">Save Job</button>
+    </form>
+{% endfor %}
+
+<a href="/search?page={{ page + 1 }}">Next Page</a>
